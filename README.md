@@ -9,7 +9,6 @@ AI provider, and exposes the native chat-completions endpoint with its full
 options on top.
 
 ## Features
-
 - Chat completions: `Generate` for a single response, `Stream` for
   token-by-token output through `iter.Seq2`.
 - Tool use (function calling), multimodal image input and system prompts.
@@ -20,6 +19,8 @@ options on top.
 - Depends only on `github.com/goloop/ai` and the standard library.
 - Structured output: `ai.Format` maps onto the provider's `response_format`
   (JSON mode or a JSON Schema); read the reply with `resp.JSON(&v)`.
+- Hosted capabilities: `ai.Request.Hosted` is refused with `ai.ErrNoHosted`,
+  because this provider's search is not reachable from the chat endpoint.
 
 ## Installation
 

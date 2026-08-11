@@ -12,6 +12,7 @@ Ukrainian version: **[DOC.UK.md](DOC.UK.md)**.
 - [Creating a client](#creating-a-client)
 - [Generate and Stream](#generate-and-stream)
 - [Structured output](#structured-output)
+- [Hosted web search](#hosted-web-search)
 - [Native chat completions](#native-chat-completions)
 - [Tools, images and system prompts](#tools-images-and-system-prompts)
 - [Image generation](#image-generation)
@@ -144,6 +145,21 @@ resp.Data[0].URL // or B64JSON
 models, err := c.Models(ctx)
 m, err := c.GetModel(ctx, grok.ModelGrok4)
 ```
+
+## Hosted web search
+
+`ai.Request.Hosted` is answered with `ai.ErrNoHosted` before the request
+leaves.
+
+This provider does run searches of its own, but they are not reachable from the
+chat endpoint this package speaks, and its documentation leaves more than one
+plausible request shape. Declaring support on a guess would mean sending JSON
+nobody has seen accepted.
+
+The refusal is the documented behavior, not a gap left in silence: an answer
+produced without the search that was asked for looks exactly like one produced
+with it, so failing loudly is the only way you can tell them apart. If you would
+rather have the answer anyway, ask again without `Hosted`.
 
 ## Options and errors
 
