@@ -31,6 +31,8 @@ func (c *Client) Capabilities() ai.Capabilities {
 			JSONSchema: ai.FormatNative,
 			Strict:     ai.FormatNative,
 		},
+		// GenerateImage draws through the images endpoint (grok-2-image).
+		Images: true,
 		// Hosted is left empty: this driver runs no capability of its own and
 		// refuses ai.Request.Hosted before the request leaves.
 	}

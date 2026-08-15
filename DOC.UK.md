@@ -135,8 +135,18 @@ resp, err := c.ChatCompletion(ctx, &grok.ChatRequest{
 resp, err := c.GenerateImage(ctx, &grok.ImageRequest{
 	Model: grok.ModelGrok2Image, Prompt: "a watercolor cat", N: 1,
 })
-resp.Data[0].URL // або B64JSON
+png, err := resp.Data[0].Bytes() // декодує inline base64; ErrNoImageBytes для URL
 ```
+
+`Bytes` читає те, що провайдер надіслав inline, і не робить I/O: картинка,
+повернута URL-ом, дає `ErrNoImageBytes` з ним усередині, бо завантаження - це
+мережевий виклик із вашими таймаутами й проксі-правилами. Nil-запит -
+`ErrNoImageRequest`. Ендпоінт xAI бере форму OpenAI, але менший піднабір - тут
+немає ручок size, quality чи style, тож ці поля свідомо відсутні, а не приймаються
+й ігноруються. `ImageResponse.Usage` - це `*ImageUsage`, заповнений коли xAI
+звітує токени, і nil коли ні. Ті самі імена (`ImageData.Bytes`, `ErrNoImageBytes`,
+`ImageUsage`) є в кожному goloop image-драйвері, тож зміна провайдера не міняє
+того, як читається результат.
 
 ## Моделі
 

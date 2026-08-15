@@ -5,6 +5,27 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.0] - 2026-08-15
+
+Minor release: image generation brought into the goloop convention. Additive.
+
+### Added
+- `ImageData.Bytes` decodes an inline image and returns `ErrNoImageBytes`
+  (naming the URL) for one delivered as a link - the same semantics and the
+  same error name as the other goloop image drivers, so the result is read the
+  same way whichever provider is behind it.
+- `ErrNoImageRequest`: a nil request is now a clear sentinel instead of a panic
+  or an opaque HTTP error.
+- `ImageResponse.Usage` (`*ImageUsage`) carries token counts when xAI reports
+  them, nil when it does not - matching the other drivers so accounting is
+  uniform.
+- `Capabilities.Images` is true: a UI can ask `ai.SupportsImages(client)`.
+
+### Documentation
+- The image request's smaller subset is stated plainly: xAI has no size,
+  quality or style knob, so those fields are deliberately absent rather than
+  accepted and ignored.
+
 ## [1.1.1] - 2026-08-11
 
 Patch release.

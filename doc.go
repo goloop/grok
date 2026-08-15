@@ -3,7 +3,9 @@
 //
 // The Client implements ai.Client, so Generate and Stream work the same as
 // with any other goloop AI provider. On top of that it exposes the native
-// chat completions endpoint with its full options, image generation and model
+// chat completions endpoint with its full options, image generation
+// (GenerateImage, with ImageData.Bytes and a nil-report ImageResponse.Usage
+// in the same shape as the other goloop drivers) and model
 // listing. The wire format is chat-completions compatible.
 //
 //	c := grok.New(os.Getenv("XAI_API_KEY"))

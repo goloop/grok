@@ -137,8 +137,18 @@ matches the `ai.ToolUse.ID`. Inline image bytes are sent as a base64 data URI.
 resp, err := c.GenerateImage(ctx, &grok.ImageRequest{
 	Model: grok.ModelGrok2Image, Prompt: "a watercolor cat", N: 1,
 })
-resp.Data[0].URL // or B64JSON
+png, err := resp.Data[0].Bytes() // decodes inline base64; ErrNoImageBytes for a URL
 ```
+
+`Bytes` reads what the provider sent inline and does no I/O: an image returned as
+a URL yields `ErrNoImageBytes` naming it, because fetching is a network call with
+your own timeouts and proxy rules. A nil request is `ErrNoImageRequest`. The xAI
+endpoint takes the OpenAI shape but a smaller subset - there is no size, quality
+or style knob, so those fields are deliberately absent rather than accepted and
+ignored. `ImageResponse.Usage` is a `*ImageUsage`, filled when xAI reports token
+counts and nil when it does not. The same names (`ImageData.Bytes`,
+`ErrNoImageBytes`, `ImageUsage`) appear in every goloop image driver, so
+switching provider does not change how the result is read.
 
 ## Models
 
