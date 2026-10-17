@@ -199,3 +199,7 @@ if errors.As(err, &apiErr) && apiErr.Status == http.StatusTooManyRequests {
 
 Запити без моделі чи повідомлень падають до мережі з `ai.ErrNoModel` або
 `ai.ErrNoMessages`.
+
+## Реліз v1.2.2
+
+Native chat та stream повертають ai.ErrNoRequest для nil-запиту.
