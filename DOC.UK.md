@@ -203,3 +203,7 @@ if errors.As(err, &apiErr) && apiErr.Status == http.StatusTooManyRequests {
 ## Реліз v1.2.2
 
 Native chat та stream повертають ai.ErrNoRequest для nil-запиту.
+
+## Поведінка запиту
+
+Для потоку клієнт обмежує час очікування заголовків. Дедлайн у контексті обмежує всю взаємодію.

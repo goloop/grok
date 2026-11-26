@@ -207,3 +207,7 @@ Requests missing a model or messages fail before the network with
 ## Release v1.2.2
 
 Reject nil native chat and stream requests before dereferencing them.
+
+## Request behavior
+
+The shared client uses a header deadline for streaming. Pass a context deadline when the caller needs to limit the entire interaction.
